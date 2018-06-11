@@ -31,6 +31,10 @@ colorflip_light() {
   if ! osascript -e 'tell application "System Events" to tell process "Ulysses"' -e 'click menu item "Dark Mode" of menu 1 of menu bar item "View" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
     /usr/libexec/PlistBuddy -c "set :ULWindowController_defaultInterfaceState:currentInterfaceState:colorMode 0" ~/Library/Containers/com.ulyssesapp.mac/Data/Library/Preferences/com.ulyssesapp.mac.plist
   fi
+
+  # Visual Studio Code
+  # Requires 'set-theme.js' from https://github.com/smockle/dotfiles/blob/master/code/themes/set-theme.js
+  node /Users/clay/Projects/dotfiles/code/themes/set-theme.js "Xcode Default Theme"
 }
 
 # Set appearance setting to Dark
@@ -58,6 +62,10 @@ colorflip_dark() {
   if ! osascript -e 'tell application "System Events" to tell process "Ulysses"' -e 'click menu item "Dark Mode" of menu 1 of menu bar item "View" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
     /usr/libexec/PlistBuddy -c "set :ULWindowController_defaultInterfaceState:currentInterfaceState:colorMode 1" ~/Library/Containers/com.ulyssesapp.mac/Data/Library/Preferences/com.ulyssesapp.mac.plist
   fi
+
+  # Visual Studio Code
+  # Requires 'set-theme.js' from https://github.com/smockle/dotfiles/blob/master/code/themes/set-theme.js
+  node /Users/clay/Projects/dotfiles/code/themes/set-theme.js "Default Dark+"
 }
 
 if [ "${appearance}" == "Light"  ] && [ "${ambientLight}" -le 200000 ]; then
