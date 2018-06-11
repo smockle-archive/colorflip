@@ -4,7 +4,7 @@
 appearance=$(defaults read NSGlobalDomain AppleInterfaceStyle 2>/dev/null 1>/dev/null && echo "Dark" || echo "Light")
 
 # Read ambient light level
-ambientLight=$(./lmutracker)
+ambientLight=$("${HOME}/Projects/colorflip/lmutracker")
 
 if [ "${appearance}" == "Light"  ] && [ "${ambientLight}" -le 200000 ]; then
   # Update appearance setting (Light → Dark)
