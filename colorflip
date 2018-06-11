@@ -6,17 +6,69 @@ appearance=$(defaults read NSGlobalDomain AppleInterfaceStyle 2>/dev/null 1>/dev
 # Read ambient light level
 ambientLight=$("${HOME}/Projects/colorflip/lmutracker")
 
-if [ "${appearance}" == "Light"  ] && [ "${ambientLight}" -le 200000 ]; then
-  # Update appearance setting (Light → Dark)
-  echo "Updating appearance: was Light, now Dark"
-  osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
-
-elif [ "${appearance}" == "Dark" ] && [ "${ambientLight}" -gt 200000 ]; then
-  # Update appearance setting (Dark → Light)
-  echo "Updating appearance: was Dark, now Light"
+# Set appearance setting to Light
+colorflip_light() {
+  # Global
   osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to false'
 
+  # Bear
+  defaults write net.shinyfrog.bear SFAppThemeName -string "Red Graphite"
+  killall Bear
+  open --background -a Bear 
+  osascript -e 'tell application "System Events" to set visible of application process "Bear" to false'
+
+  # iA Writer
+  if ! osascript -e 'tell application "System Events" to tell process "iA Writer"' -e 'click menu item "Day Mode" of menu 1 of menu bar item "View" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
+    defaults write pro.writer.mac nightMode -bool false
+  fi
+
+  # Reeder
+  if ! osascript -e 'tell application "System Events" to tell process "Reeder"' -e 'click menu item "Standard" of menu 1 of menu bar item "Themes" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
+    defaults write com.reederapp.rkit2.mac theme3 -string Standard
+  fi
+
+  # Ulysses
+  if ! osascript -e 'tell application "System Events" to tell process "Ulysses"' -e 'click menu item "Dark Mode" of menu 1 of menu bar item "View" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
+    /usr/libexec/PlistBuddy -c "set :ULWindowController_defaultInterfaceState:currentInterfaceState:colorMode 0" ~/Library/Containers/com.ulyssesapp.mac/Data/Library/Preferences/com.ulyssesapp.mac.plist
+  fi
+}
+
+# Set appearance setting to Dark
+colorflip_dark() {
+  # Global
+  osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
+
+  # Bear
+  defaults write net.shinyfrog.bear SFAppThemeName -string Charcoal
+  killall Bear
+  open --background -a Bear 
+  osascript -e 'tell application "System Events" to set visible of application process "Bear" to false'
+
+  # iA Writer
+  if ! osascript -e 'tell application "System Events" to tell process "iA Writer"' -e 'click menu item "Night Mode" of menu 1 of menu bar item "View" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
+    defaults write pro.writer.mac nightMode -bool true
+  fi
+
+  # Reeder
+  if ! osascript -e 'tell application "System Events" to tell process "Reeder"' -e 'click menu item "Darker" of menu 1 of menu bar item "Themes" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
+    defaults write com.reederapp.rkit2.mac theme3 -string Darker
+  fi
+
+  # Ulysses
+  if ! osascript -e 'tell application "System Events" to tell process "Ulysses"' -e 'click menu item "Dark Mode" of menu 1 of menu bar item "View" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
+    /usr/libexec/PlistBuddy -c "set :ULWindowController_defaultInterfaceState:currentInterfaceState:colorMode 1" ~/Library/Containers/com.ulyssesapp.mac/Data/Library/Preferences/com.ulyssesapp.mac.plist
+  fi
+}
+
+if [ "${appearance}" == "Light"  ] && [ "${ambientLight}" -le 200000 ]; then
+  echo "Updating appearance: was Light, now Dark"
+  colorflip_dark
+elif [ "${appearance}" == "Dark" ] && [ "${ambientLight}" -gt 200000 ]; then
+  echo "Updating appearance: was Dark, now Light"
+  colorflip_light
 else
-  # Nothing to do
   echo "Appearance matches ambient lighting, nothing to do"
 fi
+
+# unset colorflip_light
+# unset colorflip_dark
