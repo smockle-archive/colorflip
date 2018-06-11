@@ -15,7 +15,7 @@ colorflip_light() {
   defaults write net.shinyfrog.bear SFAppThemeName -string "Red Graphite"
   killall Bear
   open --background -a Bear 
-  osascript -e 'tell application "System Events" to set visible of application process "Bear" to false'
+  osascript -e 'delay 1' -e 'tell application "System Events" to set visible of application process "Bear" to false'
 
   # iA Writer
   if ! osascript -e 'tell application "System Events" to tell process "iA Writer"' -e 'click menu item "Day Mode" of menu 1 of menu bar item "View" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
@@ -34,7 +34,7 @@ colorflip_light() {
 
   # Visual Studio Code
   # Requires 'set-theme.js' from https://github.com/smockle/dotfiles/blob/master/code/themes/set-theme.js
-  node /Users/clay/Projects/dotfiles/code/themes/set-theme.js "Xcode Default Theme"
+  /Users/clay/Projects/dotfiles/code/themes/set-theme.js "Xcode Default Theme"
 }
 
 # Set appearance setting to Dark
@@ -45,8 +45,8 @@ colorflip_dark() {
   # Bear
   defaults write net.shinyfrog.bear SFAppThemeName -string Charcoal
   killall Bear
-  open --background -a Bear 
-  osascript -e 'tell application "System Events" to set visible of application process "Bear" to false'
+  open --background -a Bear
+  osascript -e 'delay 1' -e 'tell application "System Events" to set visible of application process "Bear" to false'
 
   # iA Writer
   if ! osascript -e 'tell application "System Events" to tell process "iA Writer"' -e 'click menu item "Night Mode" of menu 1 of menu bar item "View" of menu bar 1' -e 'end tell' 2>/dev/null 1>/dev/null; then
@@ -65,7 +65,7 @@ colorflip_dark() {
 
   # Visual Studio Code
   # Requires 'set-theme.js' from https://github.com/smockle/dotfiles/blob/master/code/themes/set-theme.js
-  node /Users/clay/Projects/dotfiles/code/themes/set-theme.js "Default Dark+"
+  /Users/clay/Projects/dotfiles/code/themes/set-theme.js "Default Dark+"
 }
 
 if [ "${appearance}" == "Light"  ] && [ "${ambientLight}" -le 200000 ]; then
