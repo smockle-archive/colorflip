@@ -1,19 +1,19 @@
 # colorflip
 
-Change UI appearance based on ambient light.
+Change UI appearance based on time of day.
 
 ## Install
 
 ```Bash
-$ sudo cp com.smockle.colorflip.plist /Library/LaunchAgents
-$ sudo launchctl load -w /Library/LaunchAgents/com.smockle.colorflip.plist
+$ cp com.smockle.colorflip.plist ~/Library/LaunchAgents
+$ launchctl load -w /Library/LaunchAgents/com.smockle.colorflip.plist
 ```
 
 ## Uninstall
 
 ```Bash
-$ sudo launchctl unload -w /Library/LaunchAgents/com.smockle.colorflip.plist
-$ sudo rm /Library/LaunchAgents/com.smockle.colorflip.plist
+$ launchctl unload -w /Library/LaunchAgents/com.smockle.colorflip.plist
+$ rm /Library/LaunchAgents/com.smockle.colorflip.plist
 ```
 
 ## Sources

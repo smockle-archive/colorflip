@@ -3,12 +3,24 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-      <string>com.smockle.colorflip</string>
+    <string>com.smockle.colorflip</string>
+
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/clay/Projects/colorflip/colorflip</string>
+        <string>bash</string>
+        <string>/Users/clay/Developer/colorflip/colorflip.sh</string>
     </array>
+
     <key>StartInterval</key>
-    <integer>30</integer>
+    <integer>300</integer>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>Nice</key>
+    <integer>20</integer>
+
+    <key>LowPriorityIO</key>
+    <true/>
 </dict>
 </plist>
