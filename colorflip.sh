@@ -40,7 +40,9 @@ colorflip() {
   # Get sunrise, sunset and current time (in seconds)
   sunrise_today=$(sunrise $(date +%j))
   sunset_today=$(sunset $(date +%j))
-  now=$(date +%s)
+  # now=$(date -j -f %H:%M 2:00 +%s)
+  now=$(date -j -f %H:%M 10:00 +%s)
+  # now=$(date +%s)
 
   # Get ambient light
   ambient_light=$(ambience)
@@ -49,15 +51,15 @@ colorflip() {
   appearance=$(defaults read NSGlobalDomain AppleInterfaceStyle 2>/dev/null 1>/dev/null && echo "Dark" || echo "Light")
 
   # Always use the light theme in very bright conditions
-  if [ "${appearance}" == "Light" ] && [ ${ambient_light} -gt 600000 ]; then
+  if [ "${appearance}" == "Light" ] && [ ${ambient_light} -gt 1050000 ]; then
     :
-  elif [ "${appearance}" == "Dark" ] && [ ${ambient_light} -gt 600000 ]; then
+  elif [ "${appearance}" == "Dark" ] && [ ${ambient_light} -gt 1050000 ]; then
     set_light
 
   # Always use the dark theme in very dark conditions
-  elif [ "${appearance}" == "Dark" ] && [ ${ambient_light} -lt 600000 ]; then
+  elif [ "${appearance}" == "Dark" ] && [ ${ambient_light} -lt 150000 ]; then
     :
-  elif [ "${appearance}" == "Light" ] && [ ${ambient_light} -lt 600000 ]; then
+  elif [ "${appearance}" == "Light" ] && [ ${ambient_light} -lt 150000 ]; then
     set_dark
 
   # Otherwise, flip themes at dawn and dusk
